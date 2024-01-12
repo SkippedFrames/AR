@@ -1,0 +1,19 @@
+//------------------------------------------------------------------------------------------------
+class SCR_DeployableInventoryItemEquipClothAction : SCR_EquipClothAction
+{
+	override bool CanBeShownScript(IEntity user)
+	{
+		IEntity owner = GetOwner();
+		if (!owner)
+			return false;
+		
+		SCR_BaseDeployableInventoryItemComponent deployableItemComponent = SCR_BaseDeployableInventoryItemComponent.Cast(owner.FindComponent(SCR_BaseDeployableInventoryItemComponent));
+		if (!deployableItemComponent)
+			return true;
+		
+		if (deployableItemComponent.IsDeployed())
+			return false;
+		
+		return super.CanBeShownScript(user);
+	}
+}
